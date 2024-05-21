@@ -3,3 +3,9 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+anime_title:
+    resource:
+        path: ../src/Module/AnimeTitle/Controller/
+        namespace: App\Module\AnimeTitle\Controller
+    type: attribute

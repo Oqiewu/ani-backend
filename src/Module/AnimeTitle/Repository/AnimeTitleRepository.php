@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Repository;
+namespace App\Module\AnimeTitle\Repository;
 
-use App\Entity\AnimeTitle;
+use App\Module\AnimeTitle\Entity\AnimeTitle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-use App\Enum\AnimeTitleGenre;
-use App\Enum\AnimeTitleType;
-use App\Enum\AnimeTitleStatus;
-use App\Enum\AgeRating;
+use App\Module\AnimeTitle\Enum\AnimeTitleGenre;
+use App\Module\AnimeTitle\Enum\AnimeTitleType;
+use App\Module\AnimeTitle\Enum\AnimeTitleStatus;
+use App\Module\AnimeTitle\Enum\AgeRating;
 
 /**
  * @extends ServiceEntityRepository<AnimeTitle>
@@ -21,17 +21,48 @@ class AnimeTitleRepository extends ServiceEntityRepository
         parent::__construct($registry, AnimeTitle::class);
     }
 
+    public function save(AnimeTitle $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(AnimeTitle $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function findById(int $id): ?AnimeTitle
+    {
+        return $this->find($id);
+    }
+
+    public function findAll(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a')
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * @param int $year
      * @return AnimeTitle[]
      */
     public function findByReleaseYear(int $year): array
     {
-        $qb = $this->createQueryBuilder('a');
-        $qb->where('YEAR(a.releaseDate) = :year')
-           ->setParameter('year', $year);
-        
-        return $qb->getQuery()->getResult();
+        return $this->createQueryBuilder('a')
+            ->where('YEAR(a.releaseDate) = :year')
+            ->setParameter('year', $year)
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -85,29 +116,4 @@ class AnimeTitleRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-//    /**
-//     * @return AnimeTitle[] Returns an array of AnimeTitle objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?AnimeTitle
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

@@ -1,6 +1,6 @@
 <?
 
-namespace App\Enum;
+namespace App\Module\AnimeTitle\Enum;
 
 enum AnimeTitleType: string
 {

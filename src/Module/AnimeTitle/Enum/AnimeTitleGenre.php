@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enum;
+namespace App\Module\AnimeTitle\Enum;
 
 enum AnimeTitleGenre: string
 {
