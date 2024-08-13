@@ -4,9 +4,10 @@ namespace App\Module\AnimeTitle\Enum;
 
 enum AgeRating: string
 {
-    case G = 'G';
-    case PG = 'PG';
-    case PG_13 = 'PG-13';
-    case R = 'R';
-    case NC_17 = 'NC-17';
+    case G = 'g';
+    case PG = 'pg';
+    case PG_13 = 'pg13';
+    case R_17 = 'r17';
+    case R = 'r';
+    case Rx = 'rx';
 }
