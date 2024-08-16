@@ -9,5 +9,7 @@ enum AgeRating: string
     case PG_13 = 'pg13';
     case R_17 = 'r17';
     case R = 'r';
-    case Rx = 'rx';
+    case R_PLUS = 'r+';
+    case RX = 'rx';
+    case UNKNOWN = 'unknown';
 }

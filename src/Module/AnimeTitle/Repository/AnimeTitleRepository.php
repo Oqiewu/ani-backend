@@ -117,13 +117,14 @@ class AnimeTitleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-        public function findByNameOrDescription(string $query): array
-        {
-            return $this->createQueryBuilder('a')
-                ->where('a.name LIKE :query')
-                ->orWhere('a.description LIKE :query')
-                ->setParameter('query', '%' . $query . '%')
-                ->getQuery()
-                ->getResult();
-        }
+    public function findByNameOrDescription(string $query): array
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.name LIKE :query')
+            ->orWhere('a.description LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

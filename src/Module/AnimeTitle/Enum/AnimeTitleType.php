@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace App\Module\AnimeTitle\Enum;
 
@@ -12,7 +12,6 @@ enum AnimeTitleType: string
     case MUSIC = 'music';
     case CM = 'cm';
     case PV = 'pv';
-    case TV_SPECIAL = 'tv_special';
-
-
+    case TV_SPECIAL = 'tv special';
+    case UNKNOWN = 'unknown';
 }

@@ -31,6 +31,8 @@ RUN apk add --no-cache \
 RUN apk add --no-cache $PHPIZE_DEPS linux-headers \
 && pecl install xdebug-3.3.2 \
 && docker-php-ext-enable xdebug
+
+COPY docker/php/php.ini /usr/local/etc/php/php.ini
     
 COPY docker/php/conf.d/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 

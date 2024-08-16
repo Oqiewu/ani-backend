@@ -19,7 +19,7 @@ class AnimeTitleDTO
     private ?string $originalName;
 
     #[Assert\NotBlank]
-    #[Assert\Length(max: 500)]
+    #[Assert\Length()]
     private ?string $description;
 
     #[Assert\NotBlank]
