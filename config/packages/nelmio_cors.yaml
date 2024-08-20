@@ -1,0 +1,9 @@
+nelmio_cors:
+    defaults:
+        allow_origin: ['%env(APP_FRONTEND_URL)%']
+        allow_credentials: true
+        allow_headers: ['content-type', 'authorization']
+        allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'DELETE']
+        max_age: 3600
+    paths:
+        '^/': null

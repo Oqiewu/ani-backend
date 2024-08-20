@@ -57,6 +57,8 @@ class JikanApiService
             ->setOriginalName($animeData['title_english'] ?? '')
             ->setDescription($animeData['synopsis'] ?? '')
             ->setImageUrl($animeData['images']['jpg']['image_url'])
+            ->setSmallImageUrl($animeData['images']['jpg']['small_image_url'])
+            ->setLargeImageUrl($animeData['images']['jpg']['large_image_url'])
             ->setGenres($this->mapGenres($animeData['genres'] ?? []))
             ->setType($this->mapType($animeData['type']))
             ->setStatus($this->mapStatus($animeData['status']))

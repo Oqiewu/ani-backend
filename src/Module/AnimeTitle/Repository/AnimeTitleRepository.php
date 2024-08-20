@@ -127,4 +127,18 @@ class AnimeTitleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return AnimeTitle[]
+     */
+    public function findPaginated(int $limit = 20, int $offset = 0): array
+    {
+        return $this->createQueryBuilder('a')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

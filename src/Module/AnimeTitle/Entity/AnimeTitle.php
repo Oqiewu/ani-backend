@@ -26,6 +26,13 @@ class AnimeTitle
     #[ORM\Column(length: 255)]
     private ?string $imageUrl = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $smallImageUrl = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $largeImageUrl = null;
+
+
     #[ORM\Column(type: 'text')]
     private ?string $description = null;
 
@@ -79,6 +86,28 @@ class AnimeTitle
     public function setImageUrl(string $imageUrl): static
     {
         $this->imageUrl = $imageUrl;
+        return $this;
+    }
+
+    public function getSmallImageUrl(): ?string
+    {
+        return $this->smallImageUrl;
+    }
+
+    public function setSmallImageUrl(string $smallImageUrl): static
+    {
+        $this->smallImageUrl = $smallImageUrl;
+        return $this;
+    }
+
+    public function getLargeImageUrl(): ?string
+    {
+        return $this->largeImageUrl;
+    }
+
+    public function setLargeImageUrl(string $largeImageUrl): static
+    {
+        $this->largeImageUrl = $largeImageUrl;
         return $this;
     }
 

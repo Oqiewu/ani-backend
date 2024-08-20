@@ -72,9 +72,9 @@ class AnimeTitleService
         return $animeTitle;
     }
 
-    public function getAll(): array
+    public function getAll(int $limit = 20, int $offset = 0): array
     {
-        $listAnimeTitle = $this->animeTitleRepository->findAll();
+        $listAnimeTitle = $this->animeTitleRepository->findPaginated($limit, $offset);
 
         if (!$listAnimeTitle) {
             throw new \Exception("Failed to get the list of AnimeTitle");
