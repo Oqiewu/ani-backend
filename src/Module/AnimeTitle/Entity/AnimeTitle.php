@@ -22,6 +22,9 @@ class AnimeTitle
 
     #[ORM\Column(length: 255)]
     private ?string $originalName = null;
+        
+    #[ORM\Column(length: 255)]
+    private ?string $imageUrl = null;
 
     #[ORM\Column(type: 'text')]
     private ?string $description = null;
@@ -65,6 +68,17 @@ class AnimeTitle
     public function setOriginalName(string $originalName): static
     {
         $this->originalName = $originalName;
+        return $this;
+    }
+
+    public function getImageUrl(): ?string
+    {
+        return $this->imageUrl;
+    }
+
+    public function setImageUrl(string $imageUrl): static
+    {
+        $this->imageUrl = $imageUrl;
         return $this;
     }
 

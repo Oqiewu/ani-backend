@@ -55,13 +55,10 @@ class SyncAnimeTitlesCommand extends Command
             foreach ($animeTitles as $anime) {
                 $totalProcessed++;
 
-                // Create or update the AnimeTitle entity
                 $animeTitle = $this->jikanApiService->createOrUpdateAnimeTitleFromData($anime);
 
-                // Persist the entity
                 $this->entityManager->persist($animeTitle);
 
-                // Flush and clear the EntityManager periodically
                 if ($totalProcessed % self::BATCH_SIZE === 0) {
                     $this->entityManager->flush();
                     $this->entityManager->clear();
