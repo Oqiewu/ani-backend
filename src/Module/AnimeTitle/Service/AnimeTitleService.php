@@ -72,16 +72,6 @@ class AnimeTitleService
         return $animeTitle;
     }
 
-    public function getAll(int $limit = 20, int $offset = 0): array
-    {
-        $listAnimeTitle = $this->animeTitleRepository->findPaginated($limit, $offset);
-
-        if (!$listAnimeTitle) {
-            throw new \Exception("Failed to get the list of AnimeTitle");
-        }
-
-        return $listAnimeTitle;
-    }
     public function delete(int $id): string
     {
         $animeTitle = $this->animeTitleRepository->findById($id);
@@ -94,4 +84,21 @@ class AnimeTitleService
     
         return "AnimeTitle with ID $id has been successfully deleted.";
     }
+
+    public function getPaginated(int $page, int $limit): array
+    {
+        $listAnimeTitle = $this->animeTitleRepository->findPaginated($page, $limit);
+
+        if (!$listAnimeTitle) {
+            throw new \Exception("Failed to get the list of AnimeTitle");
+        }
+
+        return $listAnimeTitle;
+    }
+
+    public function countAll(): int
+    {
+        return $this->animeTitleRepository->countAll();
+    }
+
 }

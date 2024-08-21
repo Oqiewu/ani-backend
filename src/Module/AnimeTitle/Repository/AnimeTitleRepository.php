@@ -44,12 +44,34 @@ class AnimeTitleRepository extends ServiceEntityRepository
         return $this->find($id);
     }
 
-    public function findAll(): array
+    /**
+     * Get paginated results.
+     *
+     * @param int $page
+     * @param int $limit
+     * @return array
+     */
+    public function findPaginated(int $page, int $limit): array
     {
-        return $this->createQueryBuilder('a')
-            ->select('a')
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit)
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
+
+    /**
+     * Get total count of entities.
+     *
+     * @return int
+     */
+    public function countAll(): int
+    {
+        return (int) $this->createQueryBuilder('a')
+            ->select('COUNT(a.id)')
             ->getQuery()
-            ->getResult();
+            ->getSingleScalarResult();
     }
 
     /**
@@ -126,19 +148,4 @@ class AnimeTitleRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    /**
-     * @param int $limit
-     * @param int $offset
-     * @return AnimeTitle[]
-     */
-    public function findPaginated(int $limit = 20, int $offset = 0): array
-    {
-        return $this->createQueryBuilder('a')
-            ->setFirstResult($offset)
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->getResult();
-    }
-
 }

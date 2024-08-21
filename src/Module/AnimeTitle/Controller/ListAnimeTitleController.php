@@ -17,11 +17,17 @@ class ListAnimeTitleController extends AbstractController
     #[Route('/anime_title', name: 'get_anime_title_list', methods: ['GET'])]
     public function get(Request $request): Response
     {
+        $page = $request->query->getInt('page', 1);
         $limit = $request->query->getInt('limit', 20);
-        $offset = $request->query->getInt('offset', 0);
 
-        $listAnimeTitle = $this->animeTitleService->getAll($limit, $offset);
+        $listAnimeTitle = $this->animeTitleService->getPaginated($page, $limit);
+        $totalItems = $this->animeTitleService->countAll();
 
-        return $this->json($listAnimeTitle, Response::HTTP_OK);
+        return $this->json([
+            'currentPage' => $page,
+            'totalPages' => (int) ceil($totalItems / $limit),
+            'totalItems' => $totalItems,
+            'items' => $listAnimeTitle,
+        ], Response::HTTP_OK);
     }
 }
