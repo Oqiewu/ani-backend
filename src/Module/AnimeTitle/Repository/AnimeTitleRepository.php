@@ -49,30 +49,36 @@ class AnimeTitleRepository extends ServiceEntityRepository
      *
      * @param int $page
      * @param int $limit
+     * @param string $name
      * @return array
      */
-    public function findPaginated(int $page, int $limit): array
+    public function findPaginated(int $page, int $limit, string $name = ''): array
     {
         $queryBuilder = $this->createQueryBuilder('a')
             ->setFirstResult(($page - 1) * $limit)
-            ->setMaxResults($limit)
-            ->getQuery();
-
-        return $queryBuilder->getResult();
+            ->setMaxResults($limit);
+    
+        if ($name) {
+            $queryBuilder->andWhere('a.name LIKE :name')
+                ->setParameter('name', '%' . $name . '%');
+        }
+    
+        return $queryBuilder->getQuery()->getResult();
     }
-
-    /**
-     * Get total count of entities.
-     *
-     * @return int
-     */
-    public function countAll(): int
+    
+    public function countAll(string $name = ''): int
     {
-        return (int) $this->createQueryBuilder('a')
-            ->select('COUNT(a.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->select('COUNT(a.id)');
+    
+        if ($name) {
+            $queryBuilder->andWhere('a.name LIKE :name')
+                ->setParameter('name', '%' . $name . '%');
+        }
+    
+        return (int) $queryBuilder->getQuery()->getSingleScalarResult();
     }
+    
 
     /**
      * @param int $year
@@ -135,16 +141,6 @@ class AnimeTitleRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->andWhere('a.ageRating = :ageRating')
             ->setParameter('ageRating', $ageRating)
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function findByNameOrDescription(string $query): array
-    {
-        return $this->createQueryBuilder('a')
-            ->where('a.name LIKE :query')
-            ->orWhere('a.description LIKE :query')
-            ->setParameter('query', '%' . $query . '%')
             ->getQuery()
             ->getResult();
     }

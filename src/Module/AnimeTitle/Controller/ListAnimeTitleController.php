@@ -19,10 +19,11 @@ class ListAnimeTitleController extends AbstractController
     {
         $page = $request->query->getInt('page', 1);
         $limit = $request->query->getInt('limit', 20);
-
-        $listAnimeTitle = $this->animeTitleService->getPaginated($page, $limit);
-        $totalItems = $this->animeTitleService->countAll();
-
+        $name = $request->query->get('name', '');
+    
+        $listAnimeTitle = $this->animeTitleService->getPaginated($page, $limit, $name);
+        $totalItems = $this->animeTitleService->countAll($name);
+    
         return $this->json([
             'currentPage' => $page,
             'totalPages' => (int) ceil($totalItems / $limit),
@@ -30,4 +31,5 @@ class ListAnimeTitleController extends AbstractController
             'items' => $listAnimeTitle,
         ], Response::HTTP_OK);
     }
+    
 }
