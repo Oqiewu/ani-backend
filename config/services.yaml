@@ -21,7 +21,9 @@ services:
     App\Command\CacheAnimeTitlesCommand:
         arguments:
             $cacheDir: '%kernel.cache_dir%/anime'
+            $jikanApiUrl: '%env(JIKAN_API)%'
 
     App\Command\SyncAnimeTitlesCommand:
         arguments:
             $cacheDir: '%kernel.cache_dir%/anime'
+        

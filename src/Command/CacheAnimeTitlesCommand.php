@@ -2,12 +2,13 @@
 
 namespace App\Command;
 
-use App\Module\AnimeTitle\Service\JikanApiService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[AsCommand(
     name: 'app:cache-anime-titles',
@@ -15,11 +16,14 @@ use Symfony\Component\Filesystem\Filesystem;
 )]
 class CacheAnimeTitlesCommand extends Command
 {
+    private HttpClientInterface $client;
+
     public function __construct(
-        private JikanApiService $jikanApiService,
-        private string $cacheDir
+        private string $cacheDir,
+        private string $jikanApiUrl
     ) {
         parent::__construct();
+        $this->client = HttpClient::create();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -31,7 +35,14 @@ class CacheAnimeTitlesCommand extends Command
         do {
             $output->writeln("Fetching page $page...");
             sleep(1);
-            $animeData = $this->jikanApiService->fetchAnimeTitles($page);
+            $response = $this->client->request('GET', $this->jikanApiUrl . '/anime', [
+                'query' => [
+                    'page' => $page,
+                    'limit' => 25,
+                ]
+            ]);
+
+            $animeData = $response->toArray()['data'] ?? [];
 
             if (empty($animeData)) {
                 $output->writeln('No more anime titles found.');
