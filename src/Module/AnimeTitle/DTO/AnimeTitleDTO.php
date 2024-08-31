@@ -19,7 +19,6 @@ class AnimeTitleDTO
     private ?string $originalName;
 
     #[Assert\NotBlank]
-    #[Assert\Length()]
     private ?string $description;
 
     #[Assert\NotBlank]
@@ -36,6 +35,15 @@ class AnimeTitleDTO
 
     #[Assert\NotBlank]
     private ?AgeRating $ageRating;
+
+    #[Assert\Url]
+    private ?string $imageUrl;
+
+    #[Assert\Url]
+    private ?string $smallImageUrl;
+
+    #[Assert\Url]
+    private ?string $largeImageUrl;
 
     public function getName(): ?string
     {
@@ -80,7 +88,7 @@ class AnimeTitleDTO
         $this->genres = $genres;
         return $this;
     }
-    
+
     public function addGenre(AnimeTitleGenre $genre): self
     {
         if (!in_array($genre, $this->genres, true)) {
@@ -88,7 +96,7 @@ class AnimeTitleDTO
         }
         return $this;
     }
-    
+
     public function removeGenre(AnimeTitleGenre $genre): self
     {
         $key = array_search($genre, $this->genres, true);
@@ -139,6 +147,39 @@ class AnimeTitleDTO
     public function setAgeRating(?AgeRating $ageRating): self
     {
         $this->ageRating = $ageRating;
+        return $this;
+    }
+
+    public function getImageUrl(): ?string
+    {
+        return $this->imageUrl;
+    }
+
+    public function setImageUrl(?string $imageUrl): self
+    {
+        $this->imageUrl = $imageUrl;
+        return $this;
+    }
+
+    public function getSmallImageUrl(): ?string
+    {
+        return $this->smallImageUrl;
+    }
+
+    public function setSmallImageUrl(?string $smallImageUrl): self
+    {
+        $this->smallImageUrl = $smallImageUrl;
+        return $this;
+    }
+
+    public function getLargeImageUrl(): ?string
+    {
+        return $this->largeImageUrl;
+    }
+
+    public function setLargeImageUrl(?string $largeImageUrl): self
+    {
+        $this->largeImageUrl = $largeImageUrl;
         return $this;
     }
 }
