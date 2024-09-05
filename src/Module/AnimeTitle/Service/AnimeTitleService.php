@@ -85,9 +85,9 @@ class AnimeTitleService
         return "AnimeTitle with ID $id has been successfully deleted.";
     }
 
-    public function getPaginated(int $page, int $limit, string $name = ''): array
+    public function getPaginated(int $page, int $limit, string $name = '', string $sort = 'name'): array
     {
-        return $this->animeTitleRepository->findPaginated($page, $limit, $name);
+        return $this->animeTitleRepository->findPaginated($page, $limit, $name, $sort);
     }
     
     public function countAll(string $name = ''): int

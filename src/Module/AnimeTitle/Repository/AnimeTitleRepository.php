@@ -50,19 +50,26 @@ class AnimeTitleRepository extends ServiceEntityRepository
      * @param int $page
      * @param int $limit
      * @param string $name
+     * @param string $sort
      * @return array
      */
-    public function findPaginated(int $page, int $limit, string $name = ''): array
+    public function findPaginated(int $page, int $limit, string $name = '', string $sort = 'name'): array
     {
         $queryBuilder = $this->createQueryBuilder('a')
             ->setFirstResult(($page - 1) * $limit)
             ->setMaxResults($limit);
-    
+
         if ($name) {
             $queryBuilder->andWhere('a.name LIKE :name')
                 ->setParameter('name', '%' . $name . '%');
         }
-    
+
+        if ($sort === 'rank') {
+            $queryBuilder->orderBy('CASE WHEN a.rank IS NULL THEN 1 ELSE 0 END, a.rank', 'ASC');
+        } else {
+            $queryBuilder->orderBy('a.name', 'ASC');
+        }
+
         return $queryBuilder->getQuery()->getResult();
     }
     

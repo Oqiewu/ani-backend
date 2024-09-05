@@ -10,6 +10,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class AnimeTitleDTO
 {
+    #[Assert\PositiveOrZero]
+    private ?int $rank = null;
+
     #[Assert\NotBlank]
     #[Assert\Length(max: 255)]
     private ?string $name;
@@ -44,6 +47,17 @@ class AnimeTitleDTO
 
     #[Assert\Url]
     private ?string $largeImageUrl;
+
+    public function getRank(): ?int
+    {
+        return $this->rank;
+    }
+
+    public function setRank(?int $rank): self
+    {
+        $this->rank = $rank;
+        return $this;
+    }
 
     public function getName(): ?string
     {

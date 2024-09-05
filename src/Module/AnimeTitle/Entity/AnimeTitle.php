@@ -17,6 +17,9 @@ class AnimeTitle
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
+    #[ORM\Column(nullable: true, name: '`rank`')]
+    private ?int $rank = null;
+
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -54,6 +57,17 @@ class AnimeTitle
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getRank(): ?int
+    {
+        return $this->rank;
+    }
+
+    public function setRank(?int $rank): static
+    {
+        $this->rank = $rank;
+        return $this;
     }
 
     public function getName(): ?string

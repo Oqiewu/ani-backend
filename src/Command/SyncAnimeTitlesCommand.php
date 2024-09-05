@@ -111,9 +111,9 @@ class SyncAnimeTitlesCommand extends Command
             ->setType($this->mapType($animeData['type']))
             ->setStatus($this->mapStatus($animeData['status']))
             ->setReleaseDate(new \DateTime($animeData['aired']['from'] ?? ''))
-            ->setAgeRating($this->mapAgeRating($animeData['rating'] ?? ''));
+            ->setAgeRating($this->mapAgeRating($animeData['rating'] ?? ''))
+            ->setRank($animeData['rank'] ?? null);
     }
-
     private function mapGenres(array $genres): array
     {
         $genreMapping = [
